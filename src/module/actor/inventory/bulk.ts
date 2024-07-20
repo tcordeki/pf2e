@@ -21,7 +21,13 @@ export class InventoryBulk {
     }
 
     get encumberedAfter(): number {
-        return Math.floor(this.#actorStrength + 5 + this.encumberedAfterAddend);
+		if (actorSize === "tiny") {
+			return Math.floor((this.#actorStrength + 5 + this.encumberedAfterAddend) / 2);
+		}else if (actorSize === "lg") {
+			return Math.floor((this.#actorStrength + 5 + this.encumberedAfterAddend) * 2);
+		}else {
+			return Math.floor(this.#actorStrength + 5 + this.encumberedAfterAddend);
+		}
     }
 
     get encumberedAfterBreakdown(): string {
@@ -31,7 +37,13 @@ export class InventoryBulk {
     }
 
     get max(): number {
-        return Math.floor(this.#actorStrength + 10 + this.maxAddend);
+        if (actorSize === "tiny") {
+			return Math.floor((this.#actorStrength + 10 + this.maxAddend) / 2);
+		}else if (actorSize === "lg") {
+			return Math.floor((this.#actorStrength + 10 + this.maxAddend) * 2);
+		}else {
+			return Math.floor(this.#actorStrength + 10 + this.maxAddend);
+		}
     }
 
     get maxBreakdown(): string {
