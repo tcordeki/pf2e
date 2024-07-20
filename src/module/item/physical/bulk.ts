@@ -174,12 +174,16 @@ class Bulk {
         const itemSizeIndex = sizes.indexOf(itemSize === "sm" ? "med" : itemSize);
         const actorSizeIndex = sizes.indexOf(actorSize === "sm" ? "med" : actorSize);
 
-        if (itemSizeIndex === actorSizeIndex) {
-            return this;
-        } else if (itemSizeIndex > actorSizeIndex) {
-            return applyNTimes((bulk) => bulk.double(), itemSizeIndex - actorSizeIndex, this as Bulk);
-        } else {
-            return applyNTimes((bulk) => bulk.halve(), actorSizeIndex - itemSizeIndex, this as Bulk);
+        if (actorSizeIndex === "tiny") {
+            if (this.isNegligible) {
+				return applyNTimes((bulk) => bulk.increment(), this as Bulk);
+			}
+        } else if (actorSizeIndex === "lg") {
+            if (this.isLight) {
+				return applyNTimes((bulk) => bulk.halve(), this as Bulk);
+			} else if (this.normal === 1) {
+				return applyNTimes((bulk) => bulk.halve(), this as Bulk);
+			}
         }
     }
 }
